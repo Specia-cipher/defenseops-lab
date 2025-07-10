@@ -291,10 +291,68 @@ Simulated changes on mobile; real effect on Linux desktop/server.
 
 ---
 
-9. Security Auditor Tool – Coming soon
+🔐 9. Security Auditor Tool (security_auditor_tool.py)
+
+**Description**  
+Performs a comprehensive security audit of the host system. Checks for:  
+- World-writable files (potential security risks)  
+- SUID binaries (privilege escalation risks)  
+- Telnet service status (legacy service exposure)  
+- Awareness of Docker environments for cloud-native auditing
+
+**Usage**
+```bash
+python security_auditor_tool.py
+python security_auditor_tool.py --json audit_report.json
+
+Example Output
+
+===============================================
+ 🛡️ DefenseOps: Security Auditor Tool
+===============================================
+
+[+] Environment: Non-Docker
+[+] Checking for world-writable files...
+[!] Found world-writable files:
+    - ./world_writable.txt
+[+] Checking telnet service status...
+[+] Telnet status: /data/data/com.termux/files/usr/bin/sh: 1: systemctl: not found
+
+===== Audit Summary =====
+World-writable files: 1
+SUID binaries:        0
+Telnet service:       /data/data/com.termux/files/usr/bin/sh: 1: systemctl: not found
+=========================
+
+[+] JSON report saved as audit_report.json
+
+JSON Report Example
+
+{
+  "scanned_at": "2025-07-10T10:42:01.109895",
+  "system_type": "Non-Docker",
+  "world_writable": ["./world_writable.txt"],
+  "suid_binaries": [],
+  "telnet_status": "/data/data/com.termux/files/usr/bin/sh: 1: systemctl: not found"
+}
+
+Notes
+
+Auto-detects Docker environments and adjusts behavior.
+
+Falls back gracefully in mobile/non-systemd environments.
+
+Simulated elements (e.g., Telnet) are fully operational when containerized.
 
 
-10. Incident Response Orchestrator – Coming soon
+🔗 LinkedIn | 🔗 GitHub
+
+
+---
+
+
+
+
 ---
 
 👨‍💻 About the Author
