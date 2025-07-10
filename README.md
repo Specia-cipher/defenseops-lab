@@ -15,11 +15,10 @@ The suite includes **10 modular tools**:
 4. Vulnerability Scanner Tool  
 5. Vulnerability Database Manager Tool  
 6. Threat Intelligence Feed Tool  
-7. Web Vulnerability Scanner Tool (upcoming)  
-8. Configuration Compliance Checker (upcoming)  
-9. Security Auditor Tool (upcoming)  
-10. Incident Response Orchestrator (upcoming)  
-
+7. Web Vulnerability Scanner Tool 
+8. Configuration Compliance Checker
+9. Security auditor tool  
+10. Incident Response Orchestrator 
 ---
 
 ## 📦 Installation
@@ -109,9 +108,6 @@ Example Output
 
 [!] ALERT! Signature match on line 2: Failed password
 [+] IP blocked: 192.168.1.50
-
-Notes
-
 Integrates with Firewall Manager Tool.
 
 Alerts are logged for later review.
@@ -122,29 +118,27 @@ Alerts are logged for later review.
 
 ---
 
-🕵️ 4. Vulnerability Scanner Tool
+🕵️ 4. Web Vulnerability Scanner (web_vuln_scanner_tool.py)
 
 Description
-
-Scans network hosts for open ports and correlates with known vulnerabilities from the database.
+Performs defensive scans of web applications for OWASP Top 10 vulnerabilities such as SQL Injection, XSS, etc.
 
 Usage
 
-python vuln_scanner_tool.py test_targets.txt --report scan_results.txt
+python web_vuln_scanner_tool.py <targets_file> [--report <file>]
 
-Example Output
+Example
 
-[+] Scan complete: 2 open ports found
-[+] Report saved to scan_results.txt
+python web_vuln_scanner_tool.py test_web_targets.txt --report web_scan.txt
 
-Notes
+Sample Output
 
-Simulated port scanning on mobile.
+[+] Starting Web Vulnerability Scan (Defensive Mode)...
+[+] Scanning http://testphp.vulnweb.com/artists.php?id=1...
+[+] Scanning http://example.com/page?name=test...
+[+] Scan complete: 0 potential issues detected across 2 targets
+[+] Report saved to web_scan.txt
 
-Real scans require Dockerized environment or desktop.
-
-
-🔗 LinkedIn | 🔗 GitHub
 
 
 ---
@@ -198,11 +192,30 @@ Feeds stored locally for offline analysis.
 
 
 ---
+7. Network Vulnerability Scanner (network_vuln_scanner_tool.py)
 
-🚀 Upcoming Tools (7–10)
+Description
+Scans a list of target hosts for open ports and known vulnerabilities using a local vulnerability database.
 
-7. Web Vulnerability Scanner Tool – Coming soon
+Usage
 
+python network_vuln_scanner_tool.py <targets_file> [--ports PORTS] [--quiet] [--report <file>] [--json]
+
+Example
+
+python network_vuln_scanner_tool.py test_targets.txt --report scan_results.txt
+
+Sample Output
+
+[+] Starting scan on test_targets.txt:1-1024
+[+] Scan complete: 0 open ports found
+[+] Report saved to scan_results.txt
+
+
+---
+
+
+🚀 Upcoming Tools (8-10)
 
 8. Configuration Compliance Checker – Coming soon
 
