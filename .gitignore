@@ -1,0 +1,7 @@
+# Ignore auto-generated firewall rules and log reports
+firewall_rules.conf
+*.log
+*.txt
+*.json
+__pycache__/
+*.pyc
