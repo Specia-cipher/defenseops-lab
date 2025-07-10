@@ -1,100 +1,228 @@
-# DefenseOps Lab 🛡️🔐
+# DefenseOps Lab
 
-A practical cybersecurity toolkit for log analysis and firewall rule management. Built for defenders, analysts, and DevSecOps engineers to respond swiftly to threats.
+DefenseOps Lab is a modular cybersecurity toolkit designed for detection, analysis, and response. Built for flexibility and extensibility, this suite empowers security engineers and DevSecOps professionals to secure systems, analyze logs, and automate responses.  
 
----
-
-## 🚀 Tools in this Lab
-
-### 1️⃣ Log Analyzer Tool
-- Scans log files for suspicious activity.
-- Supports custom regex patterns.
-- Generates clean text or JSON reports.
-
-📦 Features:
-- Quiet mode for cleaner output.
-- Custom pattern support (`--patterns patterns.txt`).
-- Output reports in text or JSON.
+> 💡 **NOTE:** Some tools simulate security behavior due to mobile constraints. Fully operational on desktop/laptop systems.  
 
 ---
 
-### 2️⃣ Firewall Manager Tool
-- Simple CLI tool to manage firewall rules.
-- Add, list, delete, and flush rules stored in `firewall_rules.conf`.
+## 🛠️ Tools Overview
 
-📦 Features:
-- Add rules: `python firewall_manager_tool.py add "block 192.168.1.100"`
-- List rules: `python firewall_manager_tool.py list`
-- Delete rules: `python firewall_manager_tool.py delete "block 192.168.1.100"`
-- Flush all rules: `python firewall_manager_tool.py flush`
-
----
-
-## 💡 Why DefenseOps Lab?
-This project demonstrates practical defensive security tooling that can be run in lightweight environments (even Termux!). Perfect for learning or rapid response.
-
----
-
-## 📂 Files
-- `log_analyzer_tool.py`
-- `firewall_manager_tool.py`
-- `firewall_rules.conf` (auto-generated)
-- `.gitignore`
+The suite includes **10 modular tools**:  
+1. Log Analyzer Tool  
+2. Firewall Manager Tool  
+3. Intrusion Detection System (IDS) Tool  
+4. Vulnerability Scanner Tool  
+5. Vulnerability Database Manager Tool  
+6. Threat Intelligence Feed Tool  
+7. Web Vulnerability Scanner Tool (upcoming)  
+8. Configuration Compliance Checker (upcoming)  
+9. Security Auditor Tool (upcoming)  
+10. Incident Response Orchestrator (upcoming)  
 
 ---
 
-## 🌐 Author
-**Sanni Idris (Specia-cipher)**  
-🔗 [GitHub](https://github.com/Specia-cipher) | 🔗 [LinkedIn](https://www.linkedin.com/in/sanniidris)
+## 📦 Installation
+
+Clone the repository:  
+```bash
+git clone https://github.com/Specia-cipher/defenseops-lab.git
+cd defenseops-lab
+
+Ensure you have Python 3.8+ installed. Install dependencies:
+
+pip install -r requirements.txt
 
 
 ---
 
-🛡️ Intrusion Detection System (IDS) Tool
+🔥 1. Log Analyzer Tool
 
-The IDS Tool acts as a lightweight intrusion detection system for log monitoring and automated threat response. It scans system logs for suspicious patterns, triggers alerts, and works seamlessly with the Firewall Manager to block offending IP addresses in real time.
+Description
 
-Features
+Scans log files for suspicious patterns (e.g., unauthorized access, disk errors) and provides summaries.
 
-Add, list, and remove custom detection signatures.
+Usage
 
-Scan log files for signature matches.
+python log_analyzer_tool.py testlog.txt
+python log_analyzer_tool.py testlog.txt --quiet
+python log_analyzer_tool.py testlog.txt --patterns custom_patterns.txt
+python log_analyzer_tool.py testlog.txt --report report.txt
 
-Auto-block offending IPs by integrating with firewall_manager_tool.py.
+Example Output
 
-Supports --dry-run mode for simulation without modifying firewall rules.
+[+] Scanning: testlog.txt
+[!] Line 2: Unauthorized access attempt
+[+] Report saved to report.txt
 
-Maintains an alerts log for incident tracking.
+Notes
 
-Quickly view and clear alerts with --view-alerts and --clear-alerts.
+Simulated logs are provided for testing.
 
 
-Usage Examples
+🔗 LinkedIn | 🔗 GitHub
 
-# Add signatures
+
+---
+
+🛡️ 2. Firewall Manager Tool
+
+Description
+
+Manages firewall rules: add, list, delete, and flush rules dynamically.
+
+Usage
+
+python firewall_manager_tool.py add "block 192.168.1.100"
+python firewall_manager_tool.py delete "block 192.168.1.100"
+python firewall_manager_tool.py list
+python firewall_manager_tool.py flush
+
+Example Output
+
+[+] Rule added: block 192.168.1.100
+[+] All firewall rules cleared.
+
+Notes
+
+Simulated firewall actions on mobile (real blocking requires desktop environment).
+
+
+🔗 LinkedIn | 🔗 GitHub
+
+
+---
+
+🔒 3. IDS Tool
+
+Description
+
+Scans logs for known attack signatures. On detection, it triggers an alert and blocks malicious IPs via the firewall.
+
+Usage
+
 python ids_tool.py --add "Failed password"
-python ids_tool.py --add "Unauthorized access"
-
-# List signatures
-python ids_tool.py --list
-
-# Scan a log file and auto-block IPs
-python ids_tool.py --scan /var/log/auth.log
-
-# Simulate scan without blocking IPs
-python ids_tool.py --scan /var/log/auth.log --dry-run
-
-# View past alerts
+python ids_tool.py --scan test_ids.log
 python ids_tool.py --view-alerts
 
-# Clear alerts log
-python ids_tool.py --clear-alerts
+Example Output
+
+[!] ALERT! Signature match on line 2: Failed password
+[+] IP blocked: 192.168.1.50
+
+Notes
+
+Integrates with Firewall Manager Tool.
+
+Alerts are logged for later review.
 
 
-📌 **Author**  
-- [Specia-cipher on GitHub](https://github.com/Specia-cipher)  
+🔗 LinkedIn | 🔗 GitHub
 
 
-- [Sanni Idris on LinkedIn](https://www.linkedin.com/in/sanni-idris)
+---
 
-sannifreelancer@gmail.com
+🕵️ 4. Vulnerability Scanner Tool
+
+Description
+
+Scans network hosts for open ports and correlates with known vulnerabilities from the database.
+
+Usage
+
+python vuln_scanner_tool.py test_targets.txt --report scan_results.txt
+
+Example Output
+
+[+] Scan complete: 2 open ports found
+[+] Report saved to scan_results.txt
+
+Notes
+
+Simulated port scanning on mobile.
+
+Real scans require Dockerized environment or desktop.
+
+
+🔗 LinkedIn | 🔗 GitHub
+
+
+---
+
+📂 5. Vulnerability Database Manager Tool
+
+Description
+
+Manage known vulnerabilities (add, search, delete).
+
+Usage
+
+python vuln_db_tool.py add 22 ssh "OpenSSH vulnerable to CVE-2024-1234"
+python vuln_db_tool.py list
+python vuln_db_tool.py search ssh
+python vuln_db_tool.py delete 1
+
+Example Output
+
+--- Vulnerability Database ---
+1. Port: 22, Service: ssh, CVE: CVE-2024-1234
+
+🔗 LinkedIn | 🔗 GitHub
+
+
+---
+
+🌐 6. Threat Intelligence Feed Tool
+
+Description
+
+Fetches and parses threat intel feeds (e.g., IP blocklists).
+
+Usage
+
+python threat_feed_tool.py --fetch
+python threat_feed_tool.py --view
+
+Example Output
+
+[+] Fetching threat feeds...
+    ✔ Success
+[+] Threat feeds saved to threat_feed.json
+
+Notes
+
+Feeds stored locally for offline analysis.
+
+
+🔗 LinkedIn | 🔗 GitHub
+
+
+---
+
+🚀 Upcoming Tools (7–10)
+
+7. Web Vulnerability Scanner Tool – Coming soon
+
+
+8. Configuration Compliance Checker – Coming soon
+
+
+9. Security Auditor Tool – Coming soon
+
+
+10. Incident Response Orchestrator – Coming soon
+
+
+
+Each will include usage examples, outputs, and author watermark.
+
+
+---
+
+👨‍💻 About the Author
+
+Built with ❤️ by Sanni Idris.
+Full repo: Specia-cipher/defenseops-lab
+
+
+---
