@@ -1,0 +1,3 @@
+Options -Indexes
+ServerTokens Prod
+ServerSignature Off

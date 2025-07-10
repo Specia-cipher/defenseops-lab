@@ -217,19 +217,84 @@ Sample Output
 
 🚀 Upcoming Tools (8-10)
 
-8. Configuration Compliance Checker – Coming soon
+8. Configuration Compliance Checker (config_compliance_checker.py)
 
+Description
+Scans system configuration files (e.g., sshd_config, apache2.conf, nginx.conf) for compliance with security best practices. Supports auto-fixing misconfigurations and custom rule sets via JSON.
+
+
+---
+
+Usage
+
+# Scan using default compliance rules
+python config_compliance_checker.py sshd_config apache2.conf nginx.conf
+
+# Auto-fix non-compliance
+python config_compliance_checker.py sshd_config apache2.conf nginx.conf --auto-fix
+
+# Use custom rules from JSON file
+python config_compliance_checker.py sshd_config apache2.conf nginx.conf --rules my_rules.json
+
+# Save compliance results as JSON report
+python config_compliance_checker.py sshd_config apache2.conf nginx.conf --json compliance_report.json
+
+# Combine custom rules, auto-fix, and report
+python config_compliance_checker.py sshd_config apache2.conf nginx.conf --rules my_rules.json --auto-fix --json custom_compliance.json
+
+
+---
+
+Example Output
+
+===============================================
+ 🛡️ DefenseOps: Configuration Compliance Checker
+===============================================
+
+[+] Scanning: sshd_config
+[+] Backup created: sshd_config.bak
+[!] Non-compliance detected: Disable root login for SSH
+[+] Auto-fixed: Disable root login for SSH
+[!] Non-compliance detected: Enforce SSH key authentication
+[+] Auto-fixed: Enforce SSH key authentication
+[+] Scanning: apache2.conf
+[+] Backup created: apache2.conf.bak
+[!] Non-compliance detected: Disable directory listing in Apache
+[+] Auto-fixed: Disable directory listing in Apache
+[+] Scanning: nginx.conf
+[+] Backup created: nginx.conf.bak
+[!] Non-compliance detected: Disable directory listing in Nginx
+[+] Auto-fixed: Disable directory listing in Nginx
+
+===== Compliance Summary =====
+- sshd_config: Issues fixed
+- apache2.conf: Issues fixed
+- nginx.conf: Issues fixed
+==============================
+[+] JSON report saved as compliance_report.json
+
+
+---
+
+Notes
+
+If --rules JSON file is malformed or missing, falls back to built-in rules automatically.
+
+Backups (.bak) are created before auto-fix.
+
+Perfect for CI/CD pipelines to enforce security compliance.
+
+Simulated changes on mobile; real effect on Linux desktop/server.
+
+
+🔗 LinkedIn | 🔗 GitHub
+
+---
 
 9. Security Auditor Tool – Coming soon
 
 
 10. Incident Response Orchestrator – Coming soon
-
-
-
-Each will include usage examples, outputs, and author watermark.
-
-
 ---
 
 👨‍💻 About the Author
