@@ -1,0 +1,7 @@
+# Dockerfile.firewall (updated)
+FROM python:3.9-alpine
+RUN apk add --no-cache iptables
+COPY firewall_manager_tool.py .
+COPY firewall_rules.conf .
+ENTRYPOINT ["python", "firewall_manager_tool.py"]
+CMD ["list"]  # Default command
