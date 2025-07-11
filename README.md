@@ -1,16 +1,16 @@
-# 🛡️ DefenseOps-Lab
+🛡️ DefenseOps-Lab
 
-A modular **DevSecOps lab** designed for hands-on mastery of **defensive security operations**.  
+A modular DevSecOps lab designed for hands-on mastery of defensive security operations.
 
-This lab features **10 standalone tools** covering system hardening, auditing, vulnerability management, and incident response – each with clean CLI interfaces and JSON support.  
+This lab features 10 standalone tools covering system hardening, auditing, vulnerability management, and incident response – each with clean CLI interfaces and JSON support.
 
-Built and tested in a **mobile lab (Termux)** with Docker-ready configurations for future containerization.  
+Built and tested in a mobile lab (Termux) with Docker-ready configurations for containerized deployments.
+
 
 ---
 
-## 🚀 Quick Start
+🚀 Quick Start
 
-```bash
 git clone https://github.com/Specia-cipher/defenseops-lab.git
 cd defenseops-lab
 python3 <tool_name>.py --help
@@ -24,8 +24,7 @@ python3 security_auditor_tool.py --json audit_report.json
 
 🛠️ Tools Overview
 
-
----
+All tools can run as standalone Python scripts or in containerized form (see 🐳 Containerized Tools).
 
 1️⃣ Configuration Compliance Checker
 
@@ -175,8 +174,7 @@ python3 network_vuln_scanner_tool.py test_targets.txt
 
 8️⃣ Security Auditor Tool
 
-Audits systems for weak configurations like world-writable files and SUID binaries.
-📌 Simulation Note: SUID checks simulated in Termux.
+Audits systems for weak configurations like world-writable files and SUID binaries. 📌 Simulation Note: SUID checks simulated in Termux.
 
 python3 security_auditor_tool.py --json audit_report.json
 
@@ -222,30 +220,64 @@ python3 web_vuln_scanner_tool.py test_web_targets.txt
 
 ---
 
-🐳 Docker Support (Planned)
+🐳 Containerized Tools
+
+The following tools are Dockerized for isolated, reproducible testing and deployment.
+
+📦 Firewall Manager Tool
+
+docker build -t firewall_manager_tool ./docker/firewall_manager
+docker run --rm firewall_manager_tool firewall_rules.conf
+
+📦 Security Auditor Tool
+
+docker build -t security_auditor_tool ./docker/security_auditor
+docker run --rm security_auditor_tool --json audit_report.json
+
+📦 Network Vulnerability Scanner
+
+docker build -t network_vuln_scanner_tool ./docker/network_scanner
+docker run --rm network_vuln_scanner_tool test_targets.txt
+
+⏳ Coming Soon
+
+Log Analyzer Tool (Docker support in progress)
+
+Threat Feed Tool (Docker support in progress)
+
+
+
+---
+
+🐳 Docker Support
 
 This lab is Docker-ready with a Dockerfile and docker-compose.yml included.
-Deployment and containerization coming soon.
+
+Deploy All Tools with Docker Compose
 
 docker-compose up --build
+
+This spins up all containerized tools in their own isolated environments.
+
+Why Docker?
+
+✅ Isolation of tools from host OS ✅ Easy reproducibility across environments ✅ Portability for cloud-native deployments
+
+Standalone Python scripts remain fully functional for environments where Docker is not preferred.
 
 
 ---
 
 ⚡ Notes
 
-🔥 Simulation: Some checks (SUID, systemctl) are simulated in Termux/mobile lab.
-
-☁️ Cloud Native: Docker and CI/CD integration are next steps.
-
+🔥 Simulation: Some checks (SUID, systemctl) are simulated in Termux/mobile lab. ☁️ Cloud Native: Additional Dockerization and CI/CD integration are ongoing.
 
 
 ---
 
 👨‍💻 About the Author
 
-🔖 Built with ❤️ by Sanni Babatunde Idris 
+🔖 Built with ❤️ by Sanni Babatunde Idris
 
-Github: github.com/Specia-cipher/defenseops-lab/
-Linkedin: https://www.linkedin.com/in/sanni-idris-89917a262?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app
-Gmail: sannifreelancer6779@gmail.com
+GitHub: github.com/Specia-cipher/defenseops-lab LinkedIn: linkedin.com/in/sanni-idris-89917a262 📧 Gmail: sannifreelancer6779@gmail.com
+
