@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  defenseops:
+    build: .
+    container_name: defenseops-lab
+    volumes:
+      - ./data:/opt/defenseops-lab/data
+    stdin_open: true
+    tty: true
