@@ -1,0 +1,20 @@
+# Use a lightweight Python image
+FROM python:3.9-slim
+
+# Set working directory inside the container
+WORKDIR /app
+
+# Copy the requirements.txt file and install dependencies
+# The 'requests' library is a dependency for threat_feed_tool.py
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the threat_feed_tool.py script into the container
+COPY threat_feed_tool.py .
+
+# Make the script executable
+RUN chmod +x threat_feed_tool.py
+
+# Set the default command to run the script
+# This allows passing arguments directly to the script (e.g., --fetch, --search)
+ENTRYPOINT ["python", "threat_feed_tool.py"]
