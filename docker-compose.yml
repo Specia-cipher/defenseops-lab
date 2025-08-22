@@ -1,10 +1,72 @@
-version: "3.8"
+version: '3.9'
 
 services:
-  defenseops:
-    build: .
-    container_name: defenseops-lab
-    volumes:
-      - ./data:/opt/defenseops-lab/data
-    stdin_open: true
-    tty: true
+  # 1. IDS Tool
+  ids:
+    build:
+      context: .
+      dockerfile: Dockerfile.ids
+    container_name: ids_tool
+
+  # 2. Security Auditor
+  security_auditor:
+    build:
+      context: .
+      dockerfile: Dockerfile.security_auditor
+    container_name: security_auditor_tool
+
+  # 3. Web Vulnerability Scanner
+  web_vuln_scanner:
+    build:
+      context: .
+      dockerfile: Dockerfile.web_vuln_scanner
+    container_name: web_vuln_scanner_tool
+
+  # 4. Vulnerability Database
+  vuln_db:
+    build:
+      context: .
+      dockerfile: Dockerfile.vuln_db
+    container_name: vuln_db_tool
+
+  # 5. Log Analyzer
+  log_analyzer:
+    build:
+      context: .
+      dockerfile: Dockerfile.log_analyzer
+    container_name: log_analyzer_tool
+
+  # 6. Incident Response Orchestrator
+  incident_response:
+    build:
+      context: .
+      dockerfile: Dockerfile.incident_response
+    container_name: incident_response_tool
+
+  # 7. Alert Correlator
+  alert_correlator:
+    build:
+      context: .
+      dockerfile: Dockerfile.alert_correlator
+    container_name: alert_correlator_tool
+
+  # 8. Network Scanner
+  network:
+    build:
+      context: .
+      dockerfile: Dockerfile.network
+    container_name: network_vuln_scanner_tool
+
+  # 9. Firewall Manager
+  firewall:
+    build:
+      context: .
+      dockerfile: Dockerfile.firewall
+    container_name: firewall_manager_tool
+
+  # 10. Threat Feed
+  threat_feed:
+    build:
+      context: .
+      dockerfile: Dockerfile.threat_feed
+    container_name: threat_feed_tool

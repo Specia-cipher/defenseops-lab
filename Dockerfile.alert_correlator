@@ -1,0 +1,12 @@
+FROM python:3.12-slim
+
+WORKDIR /opt/defenseops-lab
+
+COPY alert_correlator_tool.py .
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt || echo "No requirements"
+
+VOLUME ["/opt/defenseops-lab/reports"]
+
+ENTRYPOINT ["python3", "alert_correlator_tool.py"]

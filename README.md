@@ -1,263 +1,162 @@
-# 🛡️ DefenseOps-Lab: Hands-on Defensive Security Operations Lab
+# DefenseOps Lab  
 
-A modular DevSecOps lab designed for hands-on mastery of defensive security operations. This lab features 10 standalone Python-based tools covering system hardening, auditing, vulnerability management, and incident response – each with clean CLI interfaces and JSON support.
-
-Built and tested in a mobile lab (Termux) with Docker-ready configurations for containerized deployments, ensuring reproducibility and portability.
+A modular, containerized security operations toolkit designed for research, experimentation, and education. DefenseOps Lab brings together multiple security tools—ranging from IDS and vulnerability scanners to incident response orchestration—under one roof. Each tool can be run independently or combined into a larger workflow using Docker Compose.  
 
 ---
 
-## 📑 Table of Contents
+## Table of Contents  
 
-* [Overview](#overview)
-* [Quick Start](#quick-start)
-* [Tools Overview](#tools-overview)
-    * [1️⃣ Configuration Compliance Checker](#1-configuration-compliance-checker)
-    * [2️⃣ Log Analyzer Tool](#2-log-analyzer-tool)
-    * [3️⃣ Firewall Manager Tool](#3-firewall-manager-tool)
-    * [4️⃣ IDS Tool](#4-ids-tool)
-    * [5️⃣ Vulnerability Database Tool](#5-vulnerability-database-tool)
-    * [6️⃣ Threat Feed Tool](#6-threat-feed-tool)
-    * [7️⃣ Network Vulnerability Scanner](#7-network-vulnerability-scanner)
-    * [8️⃣ Security Auditor Tool](#8-security-auditor-tool)
-    * [9️⃣ Incident Response Orchestrator](#9-incident-response-orchestrator)
-    * [🔟 Web Vulnerability Scanner](#10-web-vulnerability-scanner)
-* [🐳 Containerized Tools](#-containerized-tools)
-* [⚡ Notes & Future Work](#-notes--future-work)
-* [👨‍💻 About the Author](#-about-the-author)
+1. [Overview](#overview)  
+2. [Quick Start](#quick-start)  
+   - [Run with Python](#run-with-python)  
+   - [Run with Docker](#run-with-docker)  
+3. [Tools Overview](#tools-overview)  
+   - [1. Intrusion Detection System (IDS)](#1-intrusion-detection-system-ids)  
+   - [2. Firewall Manager](#2-firewall-manager)  
+   - [3. Network Vulnerability Scanner](#3-network-vulnerability-scanner)  
+   - [4. Web Vulnerability Scanner](#4-web-vulnerability-scanner)  
+   - [5. Vulnerability Database](#5-vulnerability-database)  
+   - [6. Security Auditor](#6-security-auditor)  
+   - [7. Log Analyzer](#7-log-analyzer)  
+   - [8. Threat Feed Integration](#8-threat-feed-integration)  
+   - [9. Incident Response Orchestrator](#9-incident-response-orchestrator)  
+   - [10. Alert Correlator](#10-alert-correlator)  
+4. [Containerized Tools](#containerized-tools)  
+5. [Docker Compose](#docker-compose)  
+6. [Future Work](#future-work)  
+7. [About](#about)  
 
 ---
 
-## Overview
+## Overview  
 
-DefenseOps-Lab is crafted for practical learning and application in the defensive security domain. It provides a robust environment to:
+DefenseOps Lab is built to simulate a lightweight SOC (Security Operations Center). It provides:  
 
-* **Implement System Hardening:** Apply and verify secure configurations.
-* **Automate Auditing:** Scan for misconfigurations and vulnerabilities.
-* **Enhance Detection & Response:** Identify threats and orchestrate incident handling.
-* **Practice DevSecOps Principles:** Leverage containerization for isolated and reproducible testing.
+- **Standalone tools** for specific tasks (IDS, scanners, log analysis).  
+- **Containerized deployment** for each tool.  
+- **Composable architecture** using Docker Compose to run the entire stack.  
+- **Educational value** for anyone learning security automation, DevSecOps, or tool orchestration.  
 
-## 🚀 Quick Start
+---
 
-To get started with any tool:
+## Quick Start  
+
+### Run with Python  
+
+Each tool can be run directly:  
 
 ```bash
-git clone [https://github.com/Specia-cipher/defenseops-lab.git](https://github.com/Specia-cipher/defenseops-lab.git)
-cd defenseops-lab
-python3 <tool_name>.py --help
-Example:
+python3 ids_tool.py
+python3 network_vuln_scanner_tool.py
+python3 alert_correlator_tool.py ./dummy_alerts
+```
 
-Bash
+Dependencies are listed in `requirements.txt`:  
 
-python3 security_auditor_tool.py --json audit_report.json
-🛠️ Tools Overview
-All tools can run as standalone Python scripts or in containerized form (see 🐳 Containerized Tools).
+```bash
+pip install -r requirements.txt
+```  
 
-1️⃣ Configuration Compliance Checker
-Scans system configurations (SSH, Apache, Nginx) for security misconfigurations and can auto-fix them.
+---
 
-Bash
+### Run with Docker  
 
-python3 config_compliance_checker.py sshd_config apache2.conf nginx.conf --auto-fix --json compliance_report.json
-📦 Sample Output:
+Each tool has its own Dockerfile. Example (IDS):  
 
-[+] Scanning: sshd_config
-[!] Non-compliance detected: Disable root login for SSH
-[+] Auto-fixed: Disable root login for SSH
-[+] JSON report saved as compliance_report.json
-📑 Sample JSON Excerpt:
+```bash
+docker build -t defenseops-ids -f Dockerfile.ids .
+docker run --rm defenseops-ids
+```  
 
-JSON
+---
 
-{
-  "scanned_at": "2025-07-10T09:30:01Z",
-  "file": "sshd_config",
-  "issues_fixed": [
-    "Disable root login for SSH",
-    "Enforce SSH key authentication"
-  ]
-}
-2️⃣ Log Analyzer Tool
-Detects suspicious activity in system logs using signature-based detection.
+## Tools Overview  
 
-Bash
+### 1. Intrusion Detection System (IDS)  
+- File: `ids_tool.py`  
+- Purpose: Monitors and flags suspicious patterns in logs using rule-based signatures.  
 
-python3 log_analyzer_tool.py testlog.txt --patterns patterns.txt
-📦 Sample Output:
+### 2. Firewall Manager  
+- File: `firewall_manager_tool.py`  
+- Purpose: Loads firewall rules (`firewall_rules.conf`) and simulates enforcement.  
 
-[+] Loaded 1 custom patterns
+### 3. Network Vulnerability Scanner  
+- File: `network_vuln_scanner_tool.py`  
+- Purpose: Uses Nmap to identify open ports and services.  
 
-[+] Scanning: testlog.txt
-[!] Line 1: This is a test log entry.
+### 4. Web Vulnerability Scanner  
+- File: `web_vuln_scanner_tool.py`  
+- Purpose: Scans target URLs for SQLi, XSS, and common web flaws.  
 
-Scan Summary
-Total lines scanned: 1
-Suspicious lines: 1
-Percent suspicious: 100.0%
-📑 Sample Report Excerpt (report.txt):
+### 5. Vulnerability Database  
+- File: `vuln_db_tool.py`  
+- Purpose: Stores and queries vulnerabilities against CVE and whitelist datasets.  
 
-Detected Patterns:
-Failed password from 192.168.1.50
-SQL injection attempt on /login
-3️⃣ Firewall Manager Tool
-Applies and verifies firewall rules from a predefined config.
+### 6. Security Auditor  
+- File: `security_auditor_tool.py`  
+- Purpose: Audits system configurations for misconfigurations and weak settings.  
 
-Bash
+### 7. Log Analyzer  
+- File: `log_analyzer_tool.py`  
+- Purpose: Processes raw logs and extracts attack trends, patterns, and frequency.  
 
-python3 firewall_manager_tool.py firewall_rules.conf
-📦 Sample Output:
+### 8. Threat Feed Integration  
+- File: `threat_feed_tool.py`  
+- Purpose: Enriches local alerts with external threat intelligence (IP/domain feeds).  
 
-[+] Rule applied: Allow SSH
-[+] Rule applied: Deny all inbound except port 80/443
-4️⃣ IDS Tool
-Scans system logs for intrusion attempts using predefined signatures.
+### 9. Incident Response Orchestrator  
+- File: `incident_response_orchestrator.py`  
+- Purpose: Automates response steps (block IP, escalate, generate report).  
 
-Bash
+### 10. Alert Correlator  
+- File: `alert_correlator_tool.py`  
+- Purpose: Aggregates alerts, finds relationships, and produces summaries (`alert_summary.json`).  
 
-python3 ids_tool.py test_ids.log signatures.conf
-📦 Sample Output:
+---
 
-[!] Alert: Possible brute force detected from 10.0.0.5
-[+] Alerts saved to alerts.log
-📑 Sample Alerts (alerts.log):
+## Containerized Tools  
 
-Brute force attempt detected from 10.0.0.5 on SSH port.
-Port scan detected from 192.168.1.77
-5️⃣ Vulnerability Database Tool
-Checks installed software against a local CVE database.
+Each tool has a corresponding Dockerfile:  
 
-Bash
+- `Dockerfile.ids`  
+- `Dockerfile.firewall`  
+- `Dockerfile.network`  
+- `Dockerfile.web_vuln_scanner`  
+- `Dockerfile.vuln_db`  
+- `Dockerfile.security_auditor`  
+- `Dockerfile.log_analyzer`  
+- `Dockerfile.threat_feed`  
+- `Dockerfile.incident_response`  
+- `Dockerfile.alert_correlator`  
 
-python3 vuln_db_tool.py vuln_database.json
-📦 Sample Output:
+---
 
-[!] Vulnerability found: CVE-2023-1234 – Critical – OpenSSH 8.1
-📑 Sample JSON Excerpt:
+## Docker Compose  
 
-JSON
+Run the entire DefenseOps Lab stack with:  
 
-{
-  "vulnerabilities": [
-    {
-      "cve": "CVE-2023-1234",
-      "severity": "Critical",
-      "affected_version": "OpenSSH 8.1"
-    }
-  ]
-}
-6️⃣ Threat Feed Tool
-Parses threat intelligence feeds and alerts on known Indicators of Compromise (IOCs).
-
-Bash
-
-python3 threat_feed_tool.py threat_feed.json
-📦 Sample Output:
-
-[!] Malicious IP detected: 185.199.110.153
-[+] Malicious hash detected: e99a18c428cb38d5f260853678922e03
-7️⃣ Network Vulnerability Scanner
-Performs basic port scans on targets from a file.
-
-Bash
-
-python3 network_vuln_scanner_tool.py test_targets.txt
-📦 Sample Output:
-
-[+] Open ports found: 22 (SSH), 80 (HTTP)
-8️⃣ Security Auditor Tool
-Audits systems for weak configurations like world-writable files and SUID binaries.
-
-📌 Note: SUID checks are simulated when running in Termux/mobile lab environments.
-
-Bash
-
-python3 security_auditor_tool.py --json audit_report.json
-📦 Sample Output:
-
-[!] Found world-writable files: ./world_writable.txt
-[!] Found SUID binaries: ./suid_dummy
-9️⃣ Incident Response Orchestrator
-Triages incidents and recommends response actions.
-
-Bash
-
-python3 incident_response_orchestrator.py incidents.json --json orchestrator_report.json
-📦 Sample Output:
-
-[+] Incident: MALWARE on host-1
-- Isolate infected systems
-- Run antivirus scans and remove malware
-🔟 Web Vulnerability Scanner
-Scans target websites for common OWASP Top 10 vulnerabilities.
-
-Bash
-
-python3 web_vuln_scanner_tool.py test_web_targets.txt
-📦 Sample Output:
-
-[!] XSS vulnerability detected on [http://example.com/login](http://example.com/login)
-🐳 Containerized Tools
-The following tools are Dockerized for isolated, reproducible testing and deployment.
-
-Log Analyzer Tool
-
-Bash
-
-docker build -t log_analyzer_tool -f Dockerfile.log_analyzer .
-docker run --rm -v "$(pwd):/app" log_analyzer_tool testlog.txt --patterns patterns.txt
-Firewall Manager Tool
-
-Bash
-
-docker build -t firewall_manager_tool ./docker/firewall_manager
-docker run --rm firewall_manager_tool firewall_rules.conf
-Security Auditor Tool
-
-Bash
-
-docker build -t security_auditor_tool ./docker/security_auditor
-docker run --rm security_auditor_tool --json audit_report.json
-Network Vulnerability Scanner
-
-Bash
-
-docker build -t network_vuln_scanner_tool ./docker/network_scanner
-docker run --rm network_vuln_scanner_tool test_targets.txt
-Threat Feed Tool
-
-Bash
-
-docker build -t threat_feed_tool -f Dockerfile.threat_feed .
-docker run --rm -v "$(pwd):/app" threat_feed_tool --fetch
-# Example: docker run --rm -v "$(pwd):/app" threat_feed_tool --search "192.168.1.50"
-Deploy All Tools with Docker Compose
-This lab includes a Dockerfile and docker-compose.yml for easy deployment.
-
-Bash
-
+```bash
 docker-compose up --build
-This spins up all containerized tools in their own isolated environments.
+```  
 
-Why Docker?
-✅ Isolation of tools from host OS
-✅ Easy reproducibility across environments
-✅ Portability for cloud-native deployments
+This spins up all 10 tools as services, wired together for a lab-like environment.  
 
-Standalone Python scripts remain fully functional for environments where Docker is not preferred.
+---
 
-⚡ Notes & Future Work
-🔥 Simulation: Some checks (e.g., SUID, systemctl interactions) are simulated when running in Termux/mobile lab environments to ensure broad compatibility.
+## Future Work  
 
-☁️ Cloud Native: Additional Dockerization and CI/CD integration are ongoing to further enhance cloud-native deployment capabilities.
+- Streamlined dashboards for visualization.  
+- REST API layer for tool integration.  
+- Enhanced alert correlation with ML models.  
+- Optimized builds for resource-limited environments.  
 
-⏳ Coming Soon:
+---
 
-No more "Coming Soon" for Dockerization, as the remaining tools might not be ideal for simple containerization or require more complex setups.
+## About  
 
-👨‍💻 About the Author
+DefenseOps Lab is developed for security research, DevSecOps practice, and applied cybersecurity learning.  
+Author: **Special Agent** (@Specia-cipher)  
 Built with ❤️ by Sanni Babatunde Idris
-
 GitHub: github.com/Specia-cipher/defenseops-lab
-
-LinkedIn: linkedin.com/in/sanni-idris-89917a262
-
-Email: sannifreelancer6779@gmail.com
+LinkedIn: linkedin.com/in/sanni-idris-89917a262 
+Email: sannifreelancer6779@gmail.com 

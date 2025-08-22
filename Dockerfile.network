@@ -1,5 +1,15 @@
 # Dockerfile.network
 FROM python:3.9-alpine
-RUN apk add --no-cache nmap  # Essential for native scanning
-COPY network_scanner.py .
-ENTRYPOINT ["python", "network_scanner.py"]
+
+# Install nmap for native scanning
+RUN apk add --no-cache nmap
+
+# Set working directory
+WORKDIR /app
+
+# Copy the correct network scanner tool
+COPY network_vuln_scanner_tool.py .
+
+# Set entrypoint
+ENTRYPOINT ["python3", "network_vuln_scanner_tool.py"]
+
